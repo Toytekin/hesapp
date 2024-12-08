@@ -1,15 +1,17 @@
 // Rota Sabitleri
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hesapp/page/alinacak/borc_home/home_borc.dart';
+import 'package:hesapp/page/alinacak/borcekleme/borc_ekleme.dart';
 import 'package:hesapp/page/home/home.dart';
 import 'package:hesapp/page/home/splash.dart';
 
 class AppRoutes {
   static const String home = '/';
   static const String splash = '/splash';
-  static const String settings = '/settings';
-  static const String profile = '/profile';
-  static const String about = '/about';
+  static const String homeBorc = '/homeborc';
+  static const String userAdd = '/useradd';
+  static const String borcAdd = '/borcadd';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -26,14 +28,20 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.splash,
       builder: (context, state) => const SplashScreen(),
     ),
-    // GoRoute(
-    //   path: AppRoutes.profile,
-    //   builder: (context, state) => const ProfileScreen(),
-    // ),
-    // GoRoute(
-    //   path: AppRoutes.about,
-    //   builder: (context, state) => const AboutScreen(),
-    // ),
+    GoRoute(
+      path: AppRoutes.homeBorc,
+      pageBuilder: (context, state) {
+        return animasyonluGecis(const HomeBorc());
+      },
+      builder: (context, state) => const HomeBorc(),
+    ),
+    GoRoute(
+      path: AppRoutes.borcAdd,
+      pageBuilder: (context, state) {
+        return animasyonluGecis(const BorcEklemeScreen());
+      },
+      builder: (context, state) => const BorcEklemeScreen(),
+    )
   ],
 );
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hesapp/constant/path.dart';
+import 'package:hesapp/constant/route.dart';
 import 'package:hesapp/cubit/theme.dart';
 import 'package:hesapp/widget/card_s.dart';
 
@@ -41,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SbtCard(
-                    onTap: () {},
+                    onTap: () => context.go(AppRoutes.homeBorc),
                     icon: Icons.money_off,
                     yazi: 'Borç',
                     color: false,
