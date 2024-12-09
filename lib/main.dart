@@ -6,6 +6,7 @@ import 'package:hesapp/cubit/borc_cubit.dart';
 import 'package:hesapp/cubit/date_picker_cubit.dart';
 import 'package:hesapp/cubit/theme.dart';
 import 'package:hesapp/cubit/user_add_cubit.dart';
+import 'package:hesapp/page/BORC/borc_detay/secilen_user_cubit.dart';
 import 'package:hesapp/service/hive_database.dart';
 
 Future<void> main() async {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => SecilenUserCubit()),
         BlocProvider(create: (context) => BorcCubit()),
         BlocProvider(create: (context) => UserAddCubit()),
         BlocProvider(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hesapp/cubit/user_add_cubit.dart';
 import 'package:hesapp/model/user_model.dart';
-import 'package:hesapp/page/alinacak/borcekleme/borc_ekleme.dart';
+import 'package:hesapp/page/BORC/borcekleme/borc_ekleme.dart';
 
 mixin ViewBorcEkleme on State<BorcEklemeScreen> {
 //! DEĞİŞKENLER

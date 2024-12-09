@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hesapp/model/borc_model.dart';
+import 'package:hesapp/model/odeme_model.dart';
 import 'package:hesapp/model/user_model.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 class BorcCubit extends Cubit<List<BorcModel>> {
   BorcCubit() : super([]);
@@ -24,6 +26,9 @@ class BorcCubit extends Cubit<List<BorcModel>> {
 
   // This function can be used to fetch all users once at the start or when needed
   void getFilterUsers(UserModel userModel) {
+    // Her çağrıda filtreleme listesini sıfırla
+    filterList = [];
+
     for (var element in borcBox.values) {
       if (element.userModel.userID == userModel.userID) {
         filterList.add(element);
@@ -31,4 +36,64 @@ class BorcCubit extends Cubit<List<BorcModel>> {
     }
     emit(filterList);
   }
+
+  Future<void> addOdeme(String borcID, double odenenTutar) async {
+    // İlgili borç kaydını al
+    var borc = borcBox.get(borcID);
+
+    if (borc == null) return;
+
+    // Yeni ödeme geçmişi kaydı oluştur
+    var yeniOdeme = OdemeGecmisiModel(
+      odmeID: const Uuid().v1(),
+      anaPara: borc.borc,
+      odenenPara: odenenTutar,
+      kalanPara: borc.guncelBorc - odenenTutar,
+      odemeTarihi: DateTime.now(),
+    );
+
+    // Borcun güncel halini oluştur
+    if (borc.odemeGecmisi != null) {
+      borc.odemeGecmisi!.add(yeniOdeme);
+    } else {
+      borc.odemeGecmisi = [yeniOdeme];
+    }
+
+    borc.guncelBorc -= odenenTutar;
+
+    // Güncellenmiş borcu veritabanına kaydet
+    await borcBox.put(borcID, borc);
+
+    // Güncel listeyi emit et
+    emit(borcBox.values.toList());
+  }
+
+  Future<void> deleteOdeme(
+      String odmeID, String borcID, double odenenTutar) async {
+    // İlgili borç kaydını al
+    var borc = borcBox.get(borcID);
+
+    if (borc == null) return;
+
+    // Ödeme geçmişini kontrol et ve silinecek kaydı bul
+    var odemeToDelete = borc.odemeGecmisi?.firstWhere(
+      (odeme) => odeme.odmeID == odmeID,
+    );
+
+    if (odemeToDelete == null) return;
+
+    // Silinen ödeme miktarını ana paraya geri ekle
+    borc.guncelBorc += odenenTutar;
+
+    // Ödeme geçmişinden silme işlemi
+    borc.odemeGecmisi?.remove(odemeToDelete);
+
+    // Güncellenmiş borcu veritabanına kaydet
+    await borcBox.put(borcID, borc);
+
+    // Güncel listeyi emit et
+    emit(borcBox.values.toList());
+  }
+
+  deleteAllBorcsByUser(UserModel secilenUserState) {}
 }

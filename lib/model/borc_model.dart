@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:hesapp/model/odeme_model.dart';
 import 'package:hesapp/model/user_model.dart';
 
 import 'package:hive/hive.dart';
@@ -23,6 +24,10 @@ class BorcModel {
   DateTime? odenecekSonTarih;
   @HiveField(7)
   bool borcOdemeDurumu;
+  @HiveField(8)
+  List<OdemeGecmisiModel>? odemeGecmisi;
+  @HiveField(9)
+  double guncelBorc;
 
   BorcModel({
     required this.borcID,
@@ -33,5 +38,7 @@ class BorcModel {
     required this.odenecekSonTarih,
     this.odemeTarihi,
     this.borcOdemeDurumu = false,
+    this.odemeGecmisi,
+    required this.guncelBorc,
   });
 }

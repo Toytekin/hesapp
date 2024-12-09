@@ -25,13 +25,15 @@ class BorcModelAdapter extends TypeAdapter<BorcModel> {
       odenecekSonTarih: fields[6] as DateTime?,
       odemeTarihi: fields[5] as DateTime?,
       borcOdemeDurumu: fields[7] as bool,
+      odemeGecmisi: (fields[8] as List?)?.cast<OdemeGecmisiModel>(),
+      guncelBorc: fields[9] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, BorcModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.userModel)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class BorcModelAdapter extends TypeAdapter<BorcModel> {
       ..writeByte(6)
       ..write(obj.odenecekSonTarih)
       ..writeByte(7)
-      ..write(obj.borcOdemeDurumu);
+      ..write(obj.borcOdemeDurumu)
+      ..writeByte(8)
+      ..write(obj.odemeGecmisi)
+      ..writeByte(9)
+      ..write(obj.guncelBorc);
   }
 
   @override

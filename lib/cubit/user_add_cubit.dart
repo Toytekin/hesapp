@@ -7,22 +7,29 @@ class UserAddCubit extends Cubit<List<UserModel>> {
 
   var userBox = Hive.box<UserModel>('userBox');
 
-  // List of users is not needed, you can directly emit the new state
   Future<void> userAdd(UserModel userModel) async {
     await userBox.put(userModel.userID, userModel);
-    // Emit the updated list directly after adding a new user
     emit(userBox.values.toList());
   }
 
   Future<void> userDelete(UserModel userModel) async {
     await userBox.delete(userModel.userID);
-    // Emit the updated list after deleting a user
     emit(userBox.values.toList());
   }
 
-  // This function can be used to fetch all users once at the start or when needed
   void getAllUsers() {
-    // Directly emit the list of users from the box
     emit(userBox.values.toList());
+  }
+
+  void filterUsers(String query) {
+    if (query.isEmpty) {
+      getAllUsers();
+    } else {
+      var filteredUsers = userBox.values
+          .where((user) =>
+              user.userName.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      emit(filteredUsers);
+    }
   }
 }

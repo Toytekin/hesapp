@@ -1,8 +1,9 @@
 // Rota Sabitleri
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hesapp/page/alinacak/borc_home/home_borc.dart';
-import 'package:hesapp/page/alinacak/borcekleme/borc_ekleme.dart';
+import 'package:hesapp/page/BORC/borc_detay/borc_detay.dart';
+import 'package:hesapp/page/BORC/borc_home/home_borc.dart';
+import 'package:hesapp/page/BORC/borcekleme/borc_ekleme.dart';
 import 'package:hesapp/page/home/home.dart';
 import 'package:hesapp/page/home/splash.dart';
 
@@ -12,6 +13,7 @@ class AppRoutes {
   static const String homeBorc = '/homeborc';
   static const String userAdd = '/useradd';
   static const String borcAdd = '/borcadd';
+  static const String borcDetat = '/borcdetay';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -41,6 +43,13 @@ final GoRouter appRouter = GoRouter(
         return animasyonluGecis(const BorcEklemeScreen());
       },
       builder: (context, state) => const BorcEklemeScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.borcDetat,
+      pageBuilder: (context, state) {
+        return animasyonluGecis(const BorcDetayScreen());
+      },
+      builder: (context, state) => const BorcDetayScreen(),
     )
   ],
 );

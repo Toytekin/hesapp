@@ -41,6 +41,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   uuid: ^4.5.1
+  url_launcher: ^6.3.1
+  lottie: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +73,7 @@ flutter:
     - assets/image/arkaplan.png
     - assets/image/altin.png
 
-    - assets/lottie/
+    - assets/lottie/money.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
